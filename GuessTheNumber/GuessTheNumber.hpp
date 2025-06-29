@@ -13,6 +13,7 @@ extern const char *YELLOW;
 extern const char *BLUE;
 extern const char *PURPLE;
 extern const char *CYAN;
+extern const char *B_GRAY;
 extern const char *ORANGE;
 extern const char *MAGENTA;
 extern const char *RESET;

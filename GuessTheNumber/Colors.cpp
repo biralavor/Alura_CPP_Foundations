@@ -6,6 +6,7 @@ const char *YELLOW = "\e[0;33m";
 const char *BLUE = "\e[0;34m";
 const char *PURPLE = "\e[0;35m";
 const char *CYAN = "\e[0;36m";
+const char *B_GRAY = "\e[1;30m";
 const char *ORANGE = "\e[0;91m";
 const char *MAGENTA = "\e[0;95m";
 const char *RESET = "\e[0m";
