@@ -24,6 +24,7 @@ void number_hint_printer();
 
 bool is_nbr_valid(int user_nbr);
 bool does_user_won(int user_nbr, int secret_nbr);
+bool does_user_wanna_quit(std::string input_str);
 
 int random_nbr_generator(const int GAME_MIN_NBR, const int GAME_MAX_NBR);
 int update_user_number(int user_nbr, int *user_tries);

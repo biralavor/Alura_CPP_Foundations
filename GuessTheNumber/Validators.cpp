@@ -17,3 +17,15 @@ bool does_user_won(int user_nbr, int secret_nbr)
 {
     return user_nbr == secret_nbr;
 }
+
+bool does_user_wanna_quit(std::string input_str)
+{
+    if (input_str == "exit" || input_str == "quit" || input_str == "q")
+    {
+        std::cout << ORANGE
+        << "Exiting the game. Goodbye!"
+        << RESET << std::endl;
+        exit(0);
+    }
+    return false;
+}
