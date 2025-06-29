@@ -18,18 +18,10 @@ int update_user_number(int user_nbr, int *user_tries)
     
     if (!does_user_wanna_quit(input_str))
     {
-        try
-        {
-            user_nbr = std::stoi(input_str);
-        }
-        catch (const std::exception& error)
-        {
-            std::cout << RED
-            << "Invalid input. Please enter a valid number."
-            << RESET << std::endl;
-            (*user_tries)--;
+        if (is_input_not_a_nbr(input_str, user_tries))
             return (update_user_number(user_nbr, user_tries));
-        }
+        else
+            user_nbr = std::stoi(input_str);
     }
     if (!is_nbr_valid(user_nbr))
         user_nbr = update_user_number(user_nbr, user_tries);
