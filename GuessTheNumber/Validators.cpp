@@ -29,3 +29,22 @@ bool does_user_wanna_quit(std::string input_str)
     }
     return false;
 }
+
+bool is_input_not_a_nbr(std::string input_str, int *user_tries)
+{
+    int user_nbr;
+
+    try
+    {
+        user_nbr = std::stoi(input_str);
+    }
+    catch (const std::exception& error)
+    {
+        std::cout << RED
+        << "Invalid input. Please enter a valid number."
+        << RESET << std::endl;
+        (*user_tries)--;
+        return true;
+    }
+    return false;
+}
