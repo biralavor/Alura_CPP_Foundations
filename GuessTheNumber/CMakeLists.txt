@@ -16,12 +16,9 @@ set_target_properties(GuessTheNumber PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin
 )
 
-
 add_custom_target(run
     COMMAND ${CMAKE_BINARY_DIR}/bin/GuessTheNumber
     DEPENDS GuessTheNumber
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
     COMMENT "Building and running GuessTheNumber"
 )
-
-
