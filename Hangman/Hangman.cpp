@@ -38,7 +38,7 @@ bool secret_words_database_loader()
     return true;
 }
 
-std::string secret_word_randomizer()
+std::string random_secret_word_picker()
 {
     std::string actual_secret_word;
 
@@ -163,7 +163,7 @@ int main()
     if (secret_words_database_loader())
     {
         title_printer();
-        actual_secret_word = secret_word_randomizer();
+        actual_secret_word = random_secret_word_picker();
         char user_input;
         int user_tries = 0;
         while (user_tries < TOTAL_TRIES && !is_word_disclosed(actual_secret_word))
