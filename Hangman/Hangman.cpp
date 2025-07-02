@@ -4,9 +4,9 @@
 #include <vector>
 #include <cstdlib>
 #include <fstream>
+#include <ctime>
 
 const std::string database_filename = "secret_words.txt";
-const std::string SECRET_WORD = "WATERMELON";
 const int TOTAL_TRIES = 5;
 std::map<char, bool> guessed_letters;
 std::vector<char> wrong_inputs;
@@ -38,22 +38,31 @@ bool secret_words_database_loader()
     return true;
 }
 
-bool letter_checker(char user_input)
+std::string random_secret_word_picker()
 {
-    for (int idx = 0; idx < SECRET_WORD.size(); idx++)
+    std::string actual_secret_word;
+
+    srand(time(0));
+    actual_secret_word = all_secret_words[rand() % all_secret_words.size()];
+    return actual_secret_word;
+}
+
+bool letter_checker(char user_input, const std::string& actual_secret_word)
+{
+    for (int idx = 0; idx < actual_secret_word.size(); idx++)
     {
-        if (user_input == SECRET_WORD[idx])
+        if (user_input == actual_secret_word[idx])
             return (true);
     }
     return (false);
 }
 
-void secret_word_slots_printer()
+void secret_word_slots_printer(std::string actual_secret_word)
 {
-    for (int idx = 0; idx < SECRET_WORD.size(); idx++)
+    for (int idx = 0; idx < actual_secret_word.size(); idx++)
     {
-        if(guessed_letters.find(SECRET_WORD[idx]) != guessed_letters.end())
-            std::cout << SECRET_WORD[idx] << " ";
+        if(guessed_letters.find(actual_secret_word[idx]) != guessed_letters.end())
+            std::cout << actual_secret_word[idx] << " ";
         else
             std::cout << "_ ";
     }
@@ -97,11 +106,11 @@ void wrong_inputs_printer()
     std::cout << std::endl;
 }
 
-bool is_word_disclosed()
+bool is_word_disclosed(std::string actual_secret_word)
 {
-    for (int idx = 0; idx < SECRET_WORD.size(); idx++)
+    for (int idx = 0; idx < actual_secret_word.size(); idx++)
     {
-        if (guessed_letters.find(SECRET_WORD[idx]) == guessed_letters.end())
+        if (guessed_letters.find(actual_secret_word[idx]) == guessed_letters.end())
             return false;
     }
     return true;
@@ -131,9 +140,9 @@ char user_input_catcher()
     return toupper(user_input);
 }
 
-void guessed_letter_manager(char user_input, int *user_tries)
+void guessed_letter_manager(char user_input, int *user_tries, std::string actual_secret_word)
 {
-    if (letter_checker(user_input))
+    if (letter_checker(user_input, actual_secret_word))
         std::cout << user_input << " is in the word!" << std::endl;
     else
     {
@@ -149,26 +158,29 @@ void guessed_letter_manager(char user_input, int *user_tries)
 
 int main()
 {
+    std::string actual_secret_word;
+    
     if (secret_words_database_loader())
     {
         title_printer();
+        actual_secret_word = random_secret_word_picker();
         char user_input;
         int user_tries = 0;
-        while (user_tries < TOTAL_TRIES && !is_word_disclosed())
+        while (user_tries < TOTAL_TRIES && !is_word_disclosed(actual_secret_word))
         {
             hangman_printer(user_tries);
-            secret_word_slots_printer();
+            secret_word_slots_printer(actual_secret_word);
             wrong_inputs_printer();
             user_input = user_input_catcher();
             guessed_letters[user_input] = true;
-            guessed_letter_manager(user_input, &user_tries);
+            guessed_letter_manager(user_input, &user_tries, actual_secret_word);
         }
-        if (is_word_disclosed())
-            std::cout << "Congratulations! You guessed the word: " << SECRET_WORD << std::endl;
+        if (is_word_disclosed(actual_secret_word))
+            std::cout << "Congratulations! You guessed the word: " << actual_secret_word << std::endl;
         else
         {
             std::cout << "You ran out of attempts." << std::endl;
-            std::cout << "You lose! The secret word was: " << SECRET_WORD << std::endl;
+            std::cout << "You lose! The secret word was: " << actual_secret_word << std::endl;
             hangman_printer(user_tries);
         }
         std::cout << "Thanks for playing!" << std::endl;
