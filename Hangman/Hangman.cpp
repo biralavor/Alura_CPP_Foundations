@@ -3,11 +3,40 @@
 #include <map>
 #include <vector>
 #include <cstdlib>
+#include <fstream>
 
+const std::string database_filename = "secret_words.txt";
 const std::string SECRET_WORD = "WATERMELON";
 const int TOTAL_TRIES = 5;
 std::map<char, bool> guessed_letters;
 std::vector<char> wrong_inputs;
+std::vector<std::string> all_secret_words;
+
+bool secret_words_database_loader()
+{
+    std::ifstream file(database_filename);
+    std::string line;
+    int words_count = 0;
+
+    if (!file)
+    {
+        std::cerr << "\nError opening the database file: " << database_filename << std::endl;
+        return false;
+    }
+    while(std::getline(file, line)) {
+        all_secret_words.push_back(line);
+        words_count++;
+    }
+    if (words_count == 0)
+    {
+        std::cerr << "\nThe database file is empty. Adding a default word." << std::endl;
+        all_secret_words.push_back("LINUX");
+    }
+    else
+        std::cout << "\nThere are " << words_count << " secret words in the database." << std::endl;
+    file.close();
+    return true;
+}
 
 bool letter_checker(char user_input)
 {
@@ -120,26 +149,34 @@ void guessed_letter_manager(char user_input, int *user_tries)
 
 int main()
 {
-    title_printer();
-    char user_input;
-    int user_tries = 0;
-    while (user_tries < TOTAL_TRIES && !is_word_disclosed())
+    if (secret_words_database_loader())
     {
-        hangman_printer(user_tries);
-        secret_word_slots_printer();
-        wrong_inputs_printer();
-        user_input = user_input_catcher();
-        guessed_letters[user_input] = true;
-        guessed_letter_manager(user_input, &user_tries);
+        title_printer();
+        char user_input;
+        int user_tries = 0;
+        while (user_tries < TOTAL_TRIES && !is_word_disclosed())
+        {
+            hangman_printer(user_tries);
+            secret_word_slots_printer();
+            wrong_inputs_printer();
+            user_input = user_input_catcher();
+            guessed_letters[user_input] = true;
+            guessed_letter_manager(user_input, &user_tries);
+        }
+        if (is_word_disclosed())
+            std::cout << "Congratulations! You guessed the word: " << SECRET_WORD << std::endl;
+        else
+        {
+            std::cout << "You ran out of attempts." << std::endl;
+            std::cout << "You lose! The secret word was: " << SECRET_WORD << std::endl;
+            hangman_printer(user_tries);
+        }
+        std::cout << "Thanks for playing!" << std::endl;
+        exit(0);
     }
-    if (is_word_disclosed())
-        std::cout << "Congratulations! You guessed the word: " << SECRET_WORD << std::endl;
     else
     {
-        std::cout << "You ran out of attempts." << std::endl;
-        std::cout << "You lose! The secret word was: " << SECRET_WORD << std::endl;
-        hangman_printer(user_tries);
+        std::cerr << "Failed to load the secret words database. Exiting the game." << std::endl;
+        exit(1);
     }
-    std::cout << "Thanks for playing!" << std::endl;
-    exit(0);
 }
