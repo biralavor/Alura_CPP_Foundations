@@ -47,7 +47,7 @@ std::string secret_word_randomizer()
     return actual_secret_word;
 }
 
-bool letter_checker(char user_input, std::string actual_secret_word)
+bool letter_checker(char user_input, const std::string& actual_secret_word)
 {
     for (int idx = 0; idx < actual_secret_word.size(); idx++)
     {
