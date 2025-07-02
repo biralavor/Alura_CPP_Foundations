@@ -27,6 +27,7 @@ void hangman_printer(int user_tries);
 void secret_word_slots_printer(const std::string& actual_secret_word);
 
 //Managers.cpp
+void game_manager(int user_tries, const std::string &actual_secret_word);
 char user_input_manager();
 void guessed_letter_manager(char user_input, int *user_tries, \
     const std::string &actual_secret_word);
