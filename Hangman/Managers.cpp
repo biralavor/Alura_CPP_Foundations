@@ -24,7 +24,7 @@ void game_manager(int user_tries, const std::string &actual_secret_word)
         << std::endl;
         hangman_printer(user_tries);
     }
-        std::cout << "Thanks for playing!" << std::endl;
+    std::cout << "Thanks for playing!" << std::endl;
 }
 
 char user_input_manager()
