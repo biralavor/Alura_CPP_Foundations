@@ -48,7 +48,7 @@ void hangman_printer(int user_tries)
 }
 
 void secret_word_slots_printer(const std::string &actual_secret_word,
-    std::map<char, bool> &guessed_letters)
+    const std::map<char, bool> &guessed_letters)
 {
     for (int idx = 0; idx < actual_secret_word.size(); idx++)
     {
