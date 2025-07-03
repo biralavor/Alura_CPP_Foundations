@@ -2,7 +2,7 @@
 
 const int SECRET_NBR = random_nbr_generator(GAME_MIN_NBR, GAME_MAX_NBR);
 
-int main ()
+int main(void)
 {
     int user_nbr = 0;
     int user_tries = 0;

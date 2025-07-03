@@ -1,6 +1,6 @@
 #include "Hangman.hpp"
 
-int main()
+int main(void)
 {
     std::string actual_secret_word;
     std::vector<std::string> all_secret_words;
