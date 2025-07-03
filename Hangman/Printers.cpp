@@ -10,7 +10,7 @@ void title_printer()
     std::cout << "Good luck!\n" << std::endl;
 }
 
-void wrong_inputs_printer()
+void wrong_inputs_printer(const std::vector<char> &wrong_inputs)
 {
     if (wrong_inputs.empty())
         return;
@@ -47,7 +47,8 @@ void hangman_printer(int user_tries)
     std::cout << "=========" << std::endl << std::endl;
 }
 
-void secret_word_slots_printer(const std::string &actual_secret_word)
+void secret_word_slots_printer(const std::string &actual_secret_word,
+    std::map<char, bool> &guessed_letters)
 {
     for (int idx = 0; idx < actual_secret_word.size(); idx++)
     {
