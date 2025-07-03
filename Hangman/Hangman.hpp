@@ -6,11 +6,7 @@
 #include <fstream>
 #include <ctime>
 
-
 const int TOTAL_TRIES = 5;
-extern std::map<char, bool> guessed_letters;
-extern std::vector<char> wrong_inputs;
-extern std::vector<std::string> all_secret_words;
 
 //DatabaseInit.cpp
 bool secret_words_database_loader(std::vector<std::string> &all_secret_words);
