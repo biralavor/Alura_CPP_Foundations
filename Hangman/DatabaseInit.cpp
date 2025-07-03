@@ -1,7 +1,8 @@
 #include "Hangman.hpp"
 
-bool secret_words_database_loader()
+bool secret_words_database_loader(std::vector<std::string> &all_secret_words)
 {
+    const std::string database_filename = "secret_words.txt";
     std::ifstream file(database_filename);
     std::string line;
     int words_count = 0;
@@ -26,7 +27,7 @@ bool secret_words_database_loader()
     return true;
 }
 
-std::string random_secret_word_picker()
+std::string random_secret_word_picker(std::vector<std::string> &all_secret_words)
 {
     std::string actual_secret_word;
 

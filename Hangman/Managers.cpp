@@ -2,18 +2,17 @@
 
 void game_manager(int user_tries, const std::string &actual_secret_word)
 {
-    char user_input;
-    
-    while (user_tries < TOTAL_TRIES && !is_word_disclosed(actual_secret_word))
+    std::vector<char> wrong_inputs;
+    std::map<char, bool> guessed_letters;
+
+    while (user_tries < TOTAL_TRIES && !is_word_disclosed(actual_secret_word, guessed_letters))
     {
         hangman_printer(user_tries);
-        secret_word_slots_printer(actual_secret_word);
-        wrong_inputs_printer();
-        user_input = user_input_manager();
-        guessed_letters[user_input] = true;
-        guessed_letter_manager(user_input, &user_tries, actual_secret_word);
+        secret_word_slots_printer(actual_secret_word, guessed_letters);
+        wrong_inputs_printer(wrong_inputs);
+        guessed_letter_manager(&user_tries, actual_secret_word, guessed_letters, wrong_inputs);
     }
-    if (is_word_disclosed(actual_secret_word))
+    if (is_word_disclosed(actual_secret_word, guessed_letters))
     {
         std::cout << "Congratulations! You guessed the word: "
         << actual_secret_word << std::endl;
@@ -42,8 +41,13 @@ char user_input_manager()
     return toupper(user_input);
 }
 
-void guessed_letter_manager(char user_input, int *user_tries, const std::string &actual_secret_word)
+void guessed_letter_manager(int *user_tries, const std::string &actual_secret_word,
+    std::map<char, bool> &guessed_letters, std::vector<char> &wrong_inputs)
 {
+    char user_input;
+
+    user_input = user_input_manager();
+    guessed_letters[user_input] = true;
     if (letter_checker(user_input, actual_secret_word))
         std::cout << user_input << " is in the word!" << std::endl;
     else
