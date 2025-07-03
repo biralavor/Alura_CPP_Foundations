@@ -10,7 +10,7 @@ bool letter_checker(char user_input, const std::string& actual_secret_word)
     return (false);
 }
 
-bool is_word_disclosed(const std::string &actual_secret_word, std::map<char, bool> &guessed_letters)
+bool is_word_disclosed(const std::string &actual_secret_word, const std::map<char, bool> &guessed_letters)
 {
     if (guessed_letters.empty())
         return false;
